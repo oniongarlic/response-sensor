@@ -1,0 +1,26 @@
+# WiFi
+SSID = 'ResponseSensor'
+PASSWORD = 'xxx'
+HOSTNAME = 'pycom'
+IP_ADDRESS = '192.168.123.1'
+IP_MASK = '255.255.255.0'
+IP_GW = '192.168.123.254'
+IP_DNS = '192.168.123.254'
+SENSOR_IP_ADDRESS = '192.168.1.163'
+SERVER_IP_ADDRESS = '192.168.1.129'
+
+# LTE
+LTE_USE_PIN = True
+LTE_PIN = "1234"
+
+# Internal MQTT Sensor
+IMQTT_BROKER_IP = IP_GW
+IMQTT_ID = "pycom-sc"
+IMQTT_USERNAME = "pycom"
+IMQTT_PASSWORD = "pycom"
+
+# MQTT Server
+SMQTT_BROKER_IP = "xxxyyyzzz"
+SMQTT_ID = "pycom-sc"
+SMQTT_USERNAME = "pycom"
+SMQTT_PASSWORD = "pycom"
