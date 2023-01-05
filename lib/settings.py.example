@@ -21,6 +21,7 @@ IMQTT_PASSWORD = "pycom"
 
 # MQTT Server
 SMQTT_BROKER_IP = "xxxyyyzzz"
+SMQTT_PORT = 8883
 SMQTT_ID = "pycom-sc"
 SMQTT_USERNAME = "pycom"
 SMQTT_PASSWORD = "pycom"
