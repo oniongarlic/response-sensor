@@ -9,6 +9,10 @@ IP_DNS = '192.168.123.254'
 SENSOR_IP_ADDRESS = '192.168.1.163'
 SERVER_IP_ADDRESS = '192.168.1.129'
 
+# HTTP
+HTTP_BASE_URL = "https://abc.xyz/response.php"
+HTTP_AUTH_KEY = "1234567890abcdefghijklmnopqrQWERTY"
+
 # LTE
 LTE_USE_PIN = True
 LTE_PIN = "1234"
