@@ -69,9 +69,13 @@ def mqtt_connect():
 def mqtt_publish(sdata):
     try:
         rsc.publish("sensor/"+sid+"/airquality", sdata)
+        return True
     except OSError as e:
         if e.errno == errno.ECONNRESET:
             mqtt_connect()
+            rsc.publish("sensor/"+sid+"/airquality", sdata)
+            return True
+    return False
 
 # http POST the sensor data to remote server
 def http_post(sdata):
@@ -79,7 +83,7 @@ def http_post(sdata):
     urlq=cfg.HTTP_BASE_URL+"?sid="+sid
     res=req.post(url=urlq, data=sdata, headers=headers)
     res.close()
-    return
+    return True
 
 # Prepare LTE connection to the world
 # Assumes SIM card default PIN
