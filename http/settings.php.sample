@@ -1,0 +1,7 @@
+<?php
+
+$dsn='pgsql:host=127.0.0.1;dbname=response';
+$dbuser='response';
+$dbpass='response';
+$key='quugiaNah8bie9uleenipu9mohL6eu7u';
+
