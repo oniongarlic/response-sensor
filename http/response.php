@@ -39,8 +39,6 @@ function save(PDO &$db, string $sid, array $data) {
   'tps'=>$data['TypicalParticleSize']
  );
 
- log_var($s, '/tmp/response-data.json');
-
  $stmt=$db->prepare('INSERT INTO airquality
    (sensor,pm01d0,pm02d5,pm04d0,pm10d0,nc00d5,nc01d0,nc02d5,nc04d0,nc10d0,tps)
    VALUES
@@ -80,9 +78,6 @@ if (!is_array($data))
 	response_error();
 if (count($data)<10)
 	response_error();
-
-//log_var($sid, '/tmp/response-data.json');
-//log_var($data, '/tmp/response-data.json');
 
 $db->beginTransaction();
 save($db, $sid, $data);
