@@ -24,7 +24,7 @@ function response_ok() {
  die("OK");
 }
 
-function save(&$db, $sid, array $data) {
+function save(PDO &$db, string $sid, array $data) {
  $s=array(
   'sensor'=>$sid,
   'pm01d0'=>$data['PM1.0'],
