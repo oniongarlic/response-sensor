@@ -16,3 +16,9 @@ This could be simplified further by:
 # HTTP logger
 
 A very simple example http to postgresql logger php script is in http/
+
+# MQTT
+
+Monitor values with mosquitto_sub, for example
+
+mosquitto_sub -h mqtthost -v -t sensor/# --cafile MQTT-CA.pem --cert mqtt-client.crt --key mqtt-client.key -i sensor-debug
