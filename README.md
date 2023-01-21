@@ -17,7 +17,13 @@ Project details at https://h2020response.eu/
 This could be simplified further by:
 * Using i2c connection to sensor, let kernel driver handle it
 
+# Setup
+
+See lib/settings.py.example for example settings for PyCom module.
+
 # Data destinations
+
+The PyCom script can send send data to a http endpoint and/or MQTT.
 
 ## HTTP logger
 
@@ -25,7 +31,13 @@ A very simple example http to postgresql logger php script is in http
 
 ## MQTT
 
-Data is sent using secure connection to a MQTT server. It can the be re-distributed or handled in some nice manner.
+Data is sent using secure connection to a MQTT server. It can then be re-distributed or handled in some other manner.
+
+Certificates need to be uploaded to the PyCom board in /flash/cert/
+
+* "ca_certs":"/flash/cert/ca.pem"
+* "keyfile":"/flash/cert/pycom.key"
+* "certfile":"/flash/cert/pycom.crt"
 
 You can easily monitor realtime values with mosquitto_sub, for example
 
