@@ -21,6 +21,21 @@ This could be simplified further by:
 
 See lib/settings.py.example for example settings for PyCom module.
 
+Passwords and related things are dummies in here, for a real setup you need to adjust the sample configurations.
+
+# Hostapd
+
+There is a example config in hostapd/
+
+# PyCom board
+
+Transfer the contents of pycom/ to the module. How you do that is up to you.
+
+Initial setup can be made by setting up wifi over USB serial port,
+and transfering the files with ftp to the module IP.
+
+See setup/pycom-wifi.py for an simple example on how to do that.
+
 # Data destinations
 
 The PyCom script can send send data to a http endpoint and/or MQTT.
