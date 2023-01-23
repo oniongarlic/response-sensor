@@ -1,7 +1,7 @@
 all:
 
 install-pkg:
-	sudo apt get install hostapd
+	sudo apt get install hostapd python3-pip
 
 install:
 	make -C hostapd
