@@ -1,0 +1,15 @@
+[Unit]
+Description=Sensirion reader
+After=mosquitto.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+NotifyAccess=main
+ExecStart=/opt/sps30tomqtt/bin/sensirion2mqtt.py
+Restart=on-failure
+User=pi
+Group=dialout
+
+[Install]
+WantedBy=multi-user.target
