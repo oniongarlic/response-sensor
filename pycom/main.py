@@ -55,7 +55,6 @@ def sub_rsc_cb(topic, msg):
 def mqtt_connect():
     try:
         rsc.connect()
-        rsc.set_last_will(topic="sensor/"+sid+"/online", msg="0")
         rsc.publish("sensor/"+sid+"/online", str(mqc))
         rsc.publish("sensor/"+sid+"/reset", str(machine.reset_cause()))
         mqc+=1
@@ -159,8 +158,8 @@ def connect_server():
     rsc=MQTTClient("ta-sc", cfg.SMQTT_BROKER_IP, port=cfg.SMQTT_BROKER_PORT, keepalive=5000, ssl=True, ssl_params=ssl_params)
     pycom.rgbled(0x00ffff)
     rsc.set_callback(sub_rsc_cb)
-    rsc.connect()
     rsc.set_last_will(topic="sensor/"+sid+"/online", msg="0")
+    rsc.connect()
     rsc.publish("sensor/"+sid+"/online", str(1))
     rsc.publish("sensor/"+sid+"/reset", str(machine.reset_cause()))
     pycom.rgbled(0x00ff00)
