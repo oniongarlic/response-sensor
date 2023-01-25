@@ -80,9 +80,13 @@ def mqtt_publish(sdata):
 def http_post(sdata):
     headers = {"X-Authorization" : cfg.HTTP_AUTH_KEY }
     urlq=cfg.HTTP_BASE_URL+"?sid="+sid
-    res=req.post(url=urlq, data=sdata, headers=headers)
-    res.close()
-    return True
+    try:
+        res=req.post(url=urlq, data=sdata, headers=headers)
+        res.close()
+        return True
+    except ValueError as e:
+        sys.print_exception(e)
+    return False
 
 # Prepare LTE connection to the world
 # Assumes SIM card default PIN
