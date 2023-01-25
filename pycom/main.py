@@ -239,7 +239,8 @@ def main_loop():
 #    rsc.check_msg()
 #    machine.idle()
 
-print("Main program starting...")
+print("ResponseMain-v0.0.1")
+print("Starting...")
 try:
     rsc=startup()
     main_loop()

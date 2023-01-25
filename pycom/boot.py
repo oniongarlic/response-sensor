@@ -3,6 +3,8 @@ import time
 
 # Wait 20 seconds for host system to boot up
 
+print("ResponseBoot-v1")
+print("Waiting for host system to start...")
 pycom.heartbeat(False)
 
 for de in range (1,10):
@@ -12,3 +14,4 @@ for de in range (1,10):
  time.sleep(1)
 
 pycom.rgbled(0x00ff00)
+print("...done")
