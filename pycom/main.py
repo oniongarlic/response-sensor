@@ -155,7 +155,7 @@ def connect_sensor():
 def connect_server():
     print("MQTT to server")
     pycom.rgbled(0x40ff40)
-    rsc=MQTTClient("ta-sc", cfg.SMQTT_BROKER_IP, port=cfg.SMQTT_BROKER_PORT, keepalive=5000, ssl=True, ssl_params=ssl_params)
+    rsc=MQTTClient("ta-sc", cfg.SMQTT_BROKER_IP, port=cfg.SMQTT_BROKER_PORT, keepalive=25000, ssl=True, ssl_params=ssl_params)
     pycom.rgbled(0x00ffff)
     rsc.set_callback(sub_rsc_cb)
     rsc.set_last_will(topic="sensor/"+sid+"/online", msg="0")
