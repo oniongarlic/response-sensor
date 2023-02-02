@@ -25,6 +25,23 @@ Install required (and helpfull) packages with
 
  apt install hostapd mosquitto mosquitto-clients picocom git python3-paho-mqtt python3-serial
 
+Enable uart in /boot/config.txt
+
+ enable_uart=1
+
+Disable serial getty
+ systemctl disable serial-getty@ttyS0.service
+
+Disable serial console
+
+Remove console=serial0,115200 from /boot/cmdline.txt
+
+Fix permissions, add a file ttyS0.rules with 
+
+ KERNEL=="ttyS0", GROUP="dialout", MODE="0660"
+
+in /etc/udev/rules.d/ttyS0.rules
+
 # Setup
 
 See lib/settings.py.example for example settings for PyCom module.
