@@ -17,6 +17,14 @@ Project details at https://h2020response.eu/
 This could be simplified further by:
 * Using i2c connection to sensor, let kernel driver handle it
 
+# Prepare the Pi side
+
+Use lite image version, no GUI stuff is needed.
+
+Install required (and helpfull) packages with
+
+ apt install hostapd mosquitto mosquitto-clients picocom git
+
 # Setup
 
 See lib/settings.py.example for example settings for PyCom module.
