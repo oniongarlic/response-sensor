@@ -10,3 +10,7 @@ install: all
 	make -C hostapd install
 	make -C udev install
 	make -C sensirion install
+
+	systemctl disable triggerhappy
+	systemctl disable avahi-daemon
+	systemctl disable ModemManager
