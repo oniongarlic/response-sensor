@@ -59,7 +59,11 @@ There is a example config in hostapd/
 
 ## Sensirion to MQTT
 
-See sensirion/
+See sensirion/ for scripts and init scripts
+
+To check that sensor readings work, try
+
+ mosquitto_sub -t sensor/airquality
 
 # PyCom board
 
