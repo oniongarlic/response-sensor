@@ -23,7 +23,7 @@ Use lite image version, no GUI stuff is needed.
 
 Install required (and helpfull) packages with
 
- apt install hostapd mosquitto mosquitto-clients picocom git
+ apt install hostapd mosquitto mosquitto-clients picocom git python3-paho-mqtt python3-serial
 
 # Setup
 
