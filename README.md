@@ -42,15 +42,24 @@ Fix permissions, add a file ttyS0.rules with
 
 in /etc/udev/rules.d/ttyS0.rules
 
-# Setup
+# Setup PyCom module
 
 See lib/settings.py.example for example settings for PyCom module.
 
 Passwords and related things are dummies in here, for a real setup you need to adjust the sample configurations.
 
-# Hostapd
+# Setup Pi side 
+
+TL;DR
+sudo make install
+
+## Hostapd
 
 There is a example config in hostapd/
+
+## Sensirion to MQTT
+
+See sensirion/
 
 # PyCom board
 
