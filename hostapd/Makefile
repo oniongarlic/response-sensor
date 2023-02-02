@@ -7,6 +7,8 @@ install:
 	systemctl stop wpa_supplicant
 	systemctl disable wpa_supplicant
 
+	rfkill unblock wlan
+
 	systemctl unmask hostapd
 	systemctl enable hostapd
 	systemctl start hostapd

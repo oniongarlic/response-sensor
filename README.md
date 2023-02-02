@@ -57,6 +57,14 @@ sudo make install
 
 There is a example config in hostapd/
 
+Add 
+
+ interface wlan0
+    static ip_address=192.168.123.254/24
+    nohook wpa_supplicant
+
+to /etc/dhcpcd.conf
+
 ## Sensirion to MQTT
 
 See sensirion/ for scripts and init scripts
