@@ -6,4 +6,4 @@ install-pkg:
 install:
 	make -C hostapd
 	make -C udev
-	make -C sensirion2mqtt
+	make -C sensirion
