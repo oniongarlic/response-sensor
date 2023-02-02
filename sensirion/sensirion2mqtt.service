@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 NotifyAccess=main
-ExecStart=/opt/sps30tomqtt/bin/sensirion2mqtt.py
+ExecStart=/opt/sensirion2mqtt/bin/sensirion2mqtt.py
 Restart=on-failure
 User=pi
 Group=dialout
