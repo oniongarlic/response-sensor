@@ -10,6 +10,7 @@ install: all
 	make -C hostapd install
 	make -C udev install
 	make -C sensirion install
+	make -C mosquitto install
 
 	systemctl disable triggerhappy
 	systemctl disable avahi-daemon
