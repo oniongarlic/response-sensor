@@ -253,7 +253,8 @@ def main_loop():
     machine.idle()
 
 print("ResponseMain-v0.0.1")
-print("Starting...")
+print("SID: "+sid)
+
 try:
     rsc=startup()
     main_loop()
