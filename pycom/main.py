@@ -14,6 +14,9 @@ from machine import RTC
 
 import settings as cfg
 
+def get_temp():
+    return ((machine.temperature() - 32) / 1.8)
+
 # Signal that we are now in main, blue led
 pycom.rgbled(0x00007f)
 
@@ -39,9 +42,6 @@ pct=get_temp()
 
 #uart = machine.UART(1, baudrate=115200)
 #uart.init(115200, bits=8, stop=1, pins=("P3", "P4"),  rx_buffer_size=4096)
-
-def get_temp():
-    return ((machine.temperature() - 32) / 1.8)
 
 # Local MQTT sensor topic cb
 def sub_sc_cb(topic, msg):
