@@ -163,9 +163,7 @@ def connect_server():
     pycom.rgbled(0x00ffff)
     rsc.set_callback(sub_rsc_cb)
     rsc.set_last_will(topic="sensor/"+sid+"/online", msg="0")
-    rsc.connect()
-    rsc.publish("sensor/"+sid+"/online", str(1))
-    rsc.publish("sensor/"+sid+"/reset", str(machine.reset_cause()))
+    mqtt_connect()
     pycom.rgbled(0x00ff00)
     return rsc
 
