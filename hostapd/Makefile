@@ -4,6 +4,8 @@ install:
 	install -d -o root -m 755 /etc/hostapd/
 	install -o root -m 644 hostapd.conf.example /etc/hostapd/hostapd.conf
 
+	install -o root -m 644 wlan /etc/network/interfaces.d/
+
 	systemctl stop wpa_supplicant
 	systemctl disable wpa_supplicant
 
