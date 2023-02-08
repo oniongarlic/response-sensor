@@ -252,7 +252,7 @@ def main_loop():
     sc.check_msg()
     machine.idle()
 
-print("ResponseMain-v0.0.1")
+print("ResponseMain-v0.0.2")
 print("SID: "+sid)
 
 try:
