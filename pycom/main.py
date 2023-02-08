@@ -21,6 +21,7 @@ rtc=RTC()
 lte=LTE()
 wlan=WLAN(mode=WLAN.STA)
 sc=MQTTClient("pycom-sc", "192.168.123.254", port=1883)
+rsc=False
 
 ssl_params = {
  "server_hostname": cfg.SMQTT_BROKER_IP,
@@ -34,16 +35,21 @@ sid=ubinascii.hexlify(machine.unique_id()).decode()
 
 sdata=''
 mqc=1
+pct=get_temp()
 
 #uart = machine.UART(1, baudrate=115200)
 #uart.init(115200, bits=8, stop=1, pins=("P3", "P4"),  rx_buffer_size=4096)
+
+def get_temp():
+    return ((machine.temperature() - 32) / 1.8)
 
 # Local MQTT sensor topic cb
 def sub_sc_cb(topic, msg):
     pycom.rgbled(0x7f7f00)
     print(topic+" is "+msg)
     sdata=msg
-    mqtt_publish(msg)
+    if rsc:
+       mqtt_publish(msg)
     http_post(msg)
     pycom.rgbled(0x007f00)
 
@@ -79,7 +85,7 @@ def mqtt_publish(sdata):
 # http POST the sensor data to remote server
 def http_post(sdata):
     headers = {"X-Authorization" : cfg.HTTP_AUTH_KEY }
-    urlq=cfg.HTTP_BASE_URL+"?sid="+sid
+    urlq=cfg.HTTP_BASE_URL+"?sid="+sid+"&temp="+str(pct)
     try:
         res=req.post(url=urlq, data=sdata, headers=headers)
         res.close()
@@ -158,6 +164,9 @@ def connect_sensor():
 # Connect to remote server MQTT
 def connect_server():
     print("MQTT to server")
+    if len(cfg.SMQTT_BROKER_IP)==0:
+      print("No MQTT server defined, skipping")
+      return False
     pycom.rgbled(0x40ff40)
     rsc=MQTTClient("ta-sc", cfg.SMQTT_BROKER_IP, port=cfg.SMQTT_BROKER_PORT, keepalive=25000, ssl=True, ssl_params=ssl_params)
     pycom.rgbled(0x00ffff)
@@ -205,7 +214,10 @@ def startup():
 
 # MQTT
     pycom.rgbled(0x00307f)
-    rsc=connect_server()
+    if len(cfg.SMQTT_BROKER_IP)>0:
+       rsc=connect_server()
+    else:
+       rsc=False
 
     pycom.rgbled(0x003f7f)
     connect_sensor()
@@ -227,19 +239,18 @@ def main_loop():
     l+=1
     pycom.rgbled(0x00007f)
     time.sleep(1)
+    pct=get_temp()
     pycom.rgbled(0x000000)
     if l>60:
+        l=0
         pycom.rgbled(0x0000ff)
         sc.ping()
-        rsc.ping()
-        l=0
-        pct=((machine.temperature() - 32) / 1.8)
-        rsc.publish("sensor/"+sid+"/temperature", str(pct))
+        if rsc:
+          rsc.ping()
+          rsc.publish("sensor/"+sid+"/temperature", str(pct))
         pycom.rgbled(0x000000)
     sc.check_msg()
     machine.idle()
-#    rsc.check_msg()
-#    machine.idle()
 
 print("ResponseMain-v0.0.1")
 print("Starting...")
