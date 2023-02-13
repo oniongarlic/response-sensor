@@ -42,12 +42,6 @@ Fix permissions, add a file ttyS0.rules with
 
 in /etc/udev/rules.d/ttyS0.rules
 
-# Setup PyCom module
-
-See lib/settings.py.example for example settings for PyCom module.
-
-Passwords and related things are dummies in here, for a real setup you need to adjust the sample configurations.
-
 # Setup Pi side 
 
 TL;DR
@@ -73,9 +67,18 @@ To check that sensor readings work, try
 
  mosquitto_sub -t sensor/airquality
 
-# PyCom board
+# Setup PyCom module
+
+Upgrade the PyCom module, they seem to come with a pretty old firmware from 2019.
+
+Prepare by first disabling Smart provisioning with
+
+ pybytes.smart_config(False)
 
 Transfer the contents of pycom/ to the module. How you do that is up to you.
+
+See lib/settings.py.example for example settings for PyCom module code.
+Passwords and related things are dummies in here, for a real setup you need to adjust the sample configurations.
 
 Initial setup can be made by setting up wifi over USB serial port,
 and transfering the files with ftp to the module IP.
@@ -88,11 +91,15 @@ The PyCom script can send send data to a http endpoint and/or MQTT.
 
 ## HTTP logger
 
-A very simple example http to postgresql logger php script is in http
+Sensor data is POSTed as JSON body to given URL. A simple http header is used as authentication key.
+
+A very simple example http to postgresql logger php script is in http/ that can be used on the server side.
 
 ## MQTT
 
 Data is sent using secure connection to a MQTT server. It can then be re-distributed or handled in some other manner.
+
+MQTT support can be disabled by setting MQTT server address to an empty string "".
 
 Certificates need to be uploaded to the PyCom board in /flash/cert/
 
