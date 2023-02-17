@@ -17,13 +17,17 @@ import settings as cfg
 def get_temp():
     return ((machine.temperature() - 32) / 1.8)
 
+# Sensor ID
+sid=ubinascii.hexlify(machine.unique_id()).decode()
+
 # Signal that we are now in main, blue led
 pycom.rgbled(0x00007f)
 
 rtc=RTC()
 lte=LTE()
 wlan=WLAN(mode=WLAN.STA)
-sc=MQTTClient("pycom-sc", "192.168.123.254", port=1883)
+scid="pycom-"+sid
+sc=MQTTClient(scid, "192.168.123.254", port=1883)
 rsc=False
 
 ssl_params = {
@@ -32,9 +36,6 @@ ssl_params = {
  "ca_certs":"/flash/cert/ca.pem",
  "keyfile":"/flash/cert/pycom.key",
  "certfile":"/flash/cert/pycom.crt"}
-
-# Sensor ID
-sid=ubinascii.hexlify(machine.unique_id()).decode()
 
 sdata=''
 mqc=1
