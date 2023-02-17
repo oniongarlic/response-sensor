@@ -11,6 +11,7 @@ from network import WLAN
 from network import LTE
 from mqtt import MQTTClient
 from machine import RTC
+from machine import WDT
 
 import settings as cfg
 
@@ -47,7 +48,8 @@ pct=get_temp()
 # Local MQTT sensor topic cb
 def sub_sc_cb(topic, msg):
     pycom.rgbled(0x7f7f00)
-    print(topic+" is "+msg)
+    # print(topic+" is "+msg)
+    print("s")
     sdata=msg
     if rsc:
        mqtt_publish(msg)
@@ -88,6 +90,7 @@ def http_post(sdata):
     headers = {"X-Authorization" : cfg.HTTP_AUTH_KEY }
     urlq=cfg.HTTP_BASE_URL+"?sid="+sid+"&temp="+str(pct)
     try:
+        print("p")
         res=req.post(url=urlq, data=sdata, headers=headers)
         res.close()
         return True
@@ -181,11 +184,20 @@ def connect_server():
 def update_rtc():
     print("RTC")
     y=time.localtime()[0]
+    to=0
     while y == 1970:
+        print("r")
+        to+=1
         rtc.ntp_sync("pool.ntp.org")
+        time.sleep(1)
         y=time.localtime()[0]
-        time.sleep(5)
-        machine.idle()
+        if y > 2020:
+          break
+        time.sleep(2)
+        check_connections()
+        if to > 10:
+          print("ntp timeout")
+          break
     print(time.localtime())
 
 # Note, order is important here:
@@ -223,34 +235,51 @@ def startup():
     pycom.rgbled(0x003f7f)
     connect_sensor()
 
-    pycom.rgbled(0x00ff7f)
-    time.sleep(1)
-
     pycom.rgbled(0x00ff00)
     time.sleep(1)
 
     return rsc
+
+# Check that we are still connected and if not, reset
+def check_connections():
+   if not wlan.isconnected():
+     pycom.rgbled(0xff00ff)
+     print("Lost wlan connection")
+     time.sleep(5)
+     machine.reset()
+   if not lte.isconnected():
+     pycom.rgbled(0xffff00)
+     print("Lost lte connection")
+     time.sleep(5)
+     machine.reset()
 
 # Main loop
 # We poll for local mqtt messages, and send a ping every 60 seconds or so
 # also the temperature of the pycom device
 def main_loop():
   l=0
+  wdt=WDT(timeout=15000)
   while True:
+    print("m")
     l+=1
     pycom.rgbled(0x00007f)
+    wdt.feed()
     time.sleep(1)
+    wdt.feed()
     pct=get_temp()
     pycom.rgbled(0x000000)
     if l>60:
         l=0
+        print("l")
         pycom.rgbled(0x0000ff)
         sc.ping()
         if rsc:
           rsc.ping()
           rsc.publish("sensor/"+sid+"/temperature", str(pct))
         pycom.rgbled(0x000000)
+    wdt.feed()
     sc.check_msg()
+    check_connections()
     machine.idle()
 
 print("ResponseMain-v0.0.2")
@@ -268,6 +297,6 @@ except Exception as e:
 except OSError as e:
     print("OSError")
     sys.print_exception(e)
-    pycom.rgbled(0xff00ff)
+    pycom.rgbled(0xff0000)
     time.sleep(10)
     machine.reset()
