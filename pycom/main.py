@@ -127,7 +127,7 @@ def connect_wlan(con):
         wl=con.scan()
         print(wl)
         for lan in wl:
-            if (lan.ssid=='ResponseSensor'):
+            if (lan.ssid==cfg.SSID):
                 print('Found!')
                 print(lan)
                 pycom.rgbled(0x7fff20)
