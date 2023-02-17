@@ -50,6 +50,7 @@ def sub_sc_cb(topic, msg):
     pycom.rgbled(0x7f7f00)
     # print(topic+" is "+msg)
     print("s")
+    wdt.feed()
     sdata=msg
     if rsc:
        mqtt_publish(msg)
@@ -189,11 +190,11 @@ def update_rtc():
         print("r")
         to+=1
         rtc.ntp_sync("pool.ntp.org")
-        time.sleep(1)
+        time.sleep(2)
         y=time.localtime()[0]
         if y > 2020:
           break
-        time.sleep(2)
+        time.sleep(3)
         check_connections()
         if to > 10:
           print("ntp timeout")
@@ -258,7 +259,6 @@ def check_connections():
 # also the temperature of the pycom device
 def main_loop():
   l=0
-  wdt=WDT(timeout=15000)
   while True:
     print("m")
     l+=1
@@ -287,6 +287,7 @@ print("SID: "+sid)
 
 try:
     rsc=startup()
+    wdt=WDT(timeout=35000)
     main_loop()
 except Exception as e:
     print("Exception")
