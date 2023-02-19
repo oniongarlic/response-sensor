@@ -108,16 +108,30 @@ def connect_lte(con):
     ret=ret.strip()
     print(ret)
     con.attach(apn="internet")
+    ca=1
     while not con.isattached():
-        print('.')
-        time.sleep(1)
+        print(".a"+str(ca))
+        time.sleep(ca)
         machine.idle()
+        ca+=1
+        if ca > 10:
+          print("lte-attach timeout")
+          con.reset()
+          machine.reset()
+
+    cc=1
     con.connect()
     while not con.isconnected():
-        print('.')
-        time.sleep(1)
+        print(".c"+str(cc))
+        time.sleep(cc)
         machine.idle()
-    print('Connected')    
+        cc+=1
+        if cc > 10:
+          print("lte-connect timeout")
+          con.reset()
+          machine.reset()
+
+    print('Connected')
 
 # Prepare private WiFi connection to host Raspberry Pi
 # Assumes AP has network 192.168.123.0/24 and is 192.168.123.254
