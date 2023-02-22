@@ -99,6 +99,19 @@ def http_post(sdata):
         sys.print_exception(e)
     return False
 
+# http POST sensor going online
+def http_post_status():
+    headers = {"X-Authorization" : cfg.HTTP_AUTH_KEY }
+    urlq=cfg.HTTP_BASE_URL+"?sid="+sid+"&boot="+str(machine.reset_cause())
+    try:
+        print("s")
+        res=req.post(url=urlq, data='{"online": 1}', headers=headers)
+        res.close()
+        return True
+    except ValueError as e:
+        sys.print_exception(e)
+    return False
+
 # Prepare LTE connection to the world
 # Assumes SIM card default PIN
 def connect_lte(con):
@@ -273,6 +286,7 @@ def check_connections():
 # also the temperature of the pycom device
 def main_loop():
   l=0
+  http_post_status()
   while True:
     print("m")
     l+=1
