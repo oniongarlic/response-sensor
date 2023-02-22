@@ -310,7 +310,7 @@ def main_loop():
     check_connections()
     machine.idle()
 
-print("ResponseMain-v0.0.2")
+print("ResponseMain-v0.0.3")
 print("SID: "+sid)
 
 try:
