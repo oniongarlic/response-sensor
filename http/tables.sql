@@ -17,10 +17,24 @@ create table airquality (
 );
 
 -- Sensor status log
-create table sensor (
+create table sensorlog (
  dt timestamp with time zone not null default now(),
  sensor varchar(32) not null,
  uptime float,
  temperature float,
  unique(dt, sensor)
 );
+
+-- Sensor information table
+create table sensors (
+ sensor varchar(32) not null primary key,
+ idn smallint,
+ status smallint not null default 0,
+ activated timestamp with time zone not null default now(),
+ note text,
+ lat float,
+ lon float,
+ height float,
+ unique(sensor, idn, activated)
+);
+
